@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Tentang Kami - Taekwondo Garuda Club{% endblock %}
+
+{% block content %}
+    <h1 class="uk-text-center">Tentang Kami</h1>
+    <div class="uk-grid-medium" uk-grid>
+        <div class="uk-width-1-2@m">
+            <img src="{{ url_for('static', filename='images/about.jpg') }}" alt="Tentang Garuda Taekwondo Club" style="border-radius: 100%;">
+        </div>
+        <div class="uk-width-1-2@m">
+            <h1>Sejarah Taekwondo</h1>
+            <p>     Taekwondo Garuda Club adalah salah satu club Taekwondo di wilayah Tangerang dan sekitarnya yang sudah berdiri sejak Tahun 80 an dengan pusat latihan awalnya adalah GOR Tangerang. Akan tetapi karena sesuatu dan lain hal kini Pusat latihan Taekwondo Garuda Club tidak lagi berada di Gor Tangerang namun terpusat di wilayah masing-masing di daerah tangerang. Diantaranya untuk wilayah Kota Tangerang ada di SMA PGRI 109 Tangerang, Gor Balai rakyat, dan beberapa sekolah di Kota Tangerang dan untuk wilayah kabupaten ada di Club Citra Raya Center dan di Balaraja yaitu di Balaraja center dan masih banyak lagi yang tidak disebutkan. Untuk saat ini Garuda Club di ketuai oleh Sabeum Nim Edi Suyanto, S.E., M.M. yang juga Ketua Harian Taaekwondo Pengcab Kota Tangerang.</p>
+            <h2>Visi dan Misi</h2>
+            <p>Taekwondo Garuda Club didirikan dengan visi untuk menjadi pusat pelatihan taekwondo terkemuka yang menghasilkan atlet-atlet berprestasi dengan karakter yang kuat dan mental yang tangguh. Kami berkomitmen untuk menyediakan lingkungan latihan yang suportif, profesional, dan inspiratif.</p>
+            <p>Misi kami adalah: <br>
+                1. Mengembangkan potensi atlet secara optimal. <br>
+                2. Menanamkan nilai-nilai disiplin, hormat, dan sportivitas. <br>
+                3. Memberikan pelatihan berkualitas tinggi oleh pelatih bersertifikasi.
+            </p>
+        </div>
+    </div>
+{% endblock %}
