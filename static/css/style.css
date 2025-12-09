@@ -86,3 +86,6 @@ h4 {
         height: 400px !important;
     }
 }
+.uk-article-body {
+    white-space: pre-wrap;
+}

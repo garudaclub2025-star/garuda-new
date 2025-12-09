@@ -10,6 +10,7 @@
             <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">
                 <h3 class="uk-card-title">Manajemen Produk</h3>
                 <p>Kelola produk yang dijual di toko.</p>
+                <p class="uk-text-large uk-text-bold">{{ total_products if total_products is not none else 'N/A' }} Produk</p>
                 <a href="{{ url_for('admin_products') }}" class="uk-button uk-button-primary">Kelola Produk</a>
             </div>
         </div>
@@ -17,6 +18,7 @@
             <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">
                 <h3 class="uk-card-title">Manajemen Blog</h3>
                 <p>Kelola postingan blog dan artikel.</p>
+                <p class="uk-text-large uk-text-bold">{{ total_blog_posts if total_blog_posts is not none else 'N/A' }} Postingan</p>
                 <a href="{{ url_for('admin_blog') }}" class="uk-button uk-button-primary">Kelola Blog</a>
             </div>
         </div>

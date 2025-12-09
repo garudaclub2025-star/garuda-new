@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Postingan Blog: {{ post.title }}{% endblock %}
+
+{% block content %}
+    <h1 class="uk-text-center">Edit Postingan Blog</h1>
+
+    <div class="uk-card uk-card-default uk-card-body uk-width-1-2@m uk-align-center">
+        <h3 class="uk-card-title">Edit Postingan: {{ post.title }}</h3>
+        <form action="{{ url_for('admin_edit_blog_post', post_id=post._id) }}" method="post" enctype="multipart/form-data">
+            <div class="uk-margin">
+                <input class="uk-input" type="text" name="title" placeholder="Judul Postingan" value="{{ post.title }}" required>
+            </div>
+            <div class="uk-margin" style="font-family: arial !important;">
+                <textarea class="uk-textarea" name="content" rows="10" placeholder="Isi Postingan" required>{{ post.content }}</textarea>
+            </div>
+            <div class="uk-margin">
+                <p>Gambar Saat Ini:</p>
+                <img src="{{ post.get('image_url', url_for('static', filename='images/placeholder.jpg')) }}" alt="{{ post.title }}" width="150" class="uk-margin-small-bottom">
+            </div>
+            <div class="uk-margin" uk-form-custom="target: true">
+                <input type="file" name="image">
+                <input class="uk-input uk-form-width-medium" type="text" placeholder="Pilih Gambar Blog Baru (Opsional)" disabled>
+            </div>
+            <div class="uk-margin">
+                <button class="uk-button uk-button-primary" type="submit">Simpan Perubahan</button>
+                <a href="{{ url_for('admin_blog') }}" class="uk-button uk-button-default">Batal</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

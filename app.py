@@ -244,11 +244,20 @@ def contact():
 # --- Rute-rute Admin ---
 
 @app.route('/admin')
-@login_required
+@login_required # Jika menggunakan Flask-Login
 def admin_dashboard():
-    products_count = mongo.db.products.count_documents({})
-    posts_count = mongo.db.blog_posts.count_documents({})
-    return render_template('admin/dashboard.html', products_count=products_count, posts_count=posts_count)
+    # Hitung jumlah produk
+    # Ganti dengan cara Anda menghitung di ORM/Database Anda
+    total_products = mongo.db.products.count_documents({})
+
+    # Asumsi nama collection blog Anda adalah 'blog_posts' (atau 'blog')
+    total_blog_posts = mongo.db.blog_posts.count_documents({})
+
+    return render_template(
+        'admin/dashboard.html',
+        total_products=total_products,
+        total_blog_posts=total_blog_posts
+    )
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
@@ -306,6 +315,41 @@ def admin_delete_product(product_id):
     flash('Produk berhasil dihapus.', 'success')
     return redirect(url_for('admin_products'))
 
+@app.route('/admin/products/edit/<product_id>', methods=['GET', 'POST'])
+@login_required
+def admin_edit_product(product_id):
+    product = mongo.db.products.find_one({'_id': ObjectId(product_id)})
+    
+    if not product:
+        flash('Produk tidak ditemukan.', 'danger')
+        return redirect(url_for('admin_products'))
+
+    if request.method == 'POST':
+        name = request.form.get('name')
+        price = int(request.form.get('price'))
+        description = request.form.get('description')
+        image = request.files.get('image')
+
+        update_data = {
+            'name': name,
+            'price': price,
+            'description': description
+        }
+        
+        # Penanganan gambar jika ada unggahan baru
+        if image and image.filename:
+            upload_result = cloudinary.uploader.upload(image)
+            update_data['image_url'] = upload_result['url']
+
+        mongo.db.products.update_one(
+            {'_id': ObjectId(product_id)},
+            {'$set': update_data}
+        )
+        flash('Produk berhasil diperbarui!', 'success')
+        return redirect(url_for('admin_products'))
+
+    return render_template('admin/edit_product.html', product=product)
+
 # Rute CRUD Blog Admin
 @app.route('/admin/blog', methods=['GET', 'POST'])
 @login_required
@@ -339,6 +383,44 @@ def admin_delete_blog_post(post_id):
     mongo.db.blog_posts.delete_one({'_id': ObjectId(post_id)})
     flash('Artikel blog berhasil dihapus.', 'success')
     return redirect(url_for('admin_blog'))
+
+@app.route('/admin/blog/edit/<post_id>', methods=['GET', 'POST'])
+@login_required
+def admin_edit_blog_post(post_id):
+    post = mongo.db.blog_posts.find_one({'_id': ObjectId(post_id)})
+    
+    if not post:
+        flash('Artikel tidak ditemukan.', 'danger')
+        return redirect(url_for('admin_blog'))
+
+    if request.method == 'POST':
+        title = request.form.get('title')
+        content = request.form.get('content')
+        image = request.files.get('image')
+
+        update_data = {
+            'title': title,
+            'content': content
+            # Tidak mengubah 'author' dan 'date_posted'
+        }
+        
+        # Penanganan gambar jika ada unggahan baru
+        if image and image.filename:
+            upload_result = cloudinary.uploader.upload(image)
+            update_data['image_url'] = upload_result['url']
+        
+        # Menghapus gambar lama jika ada permintaan untuk menghapus atau diganti
+        if request.form.get('delete_image'):
+             update_data['image_url'] = None # Hapus URL gambar
+        
+        mongo.db.blog_posts.update_one(
+            {'_id': ObjectId(post_id)},
+            {'$set': update_data}
+        )
+        flash('Artikel blog berhasil diperbarui!', 'success')
+        return redirect(url_for('admin_blog'))
+
+    return render_template('admin/edit_blog_post.html', post=post)
 
 @app.route('/sitemap.xml')
 def sitemap():

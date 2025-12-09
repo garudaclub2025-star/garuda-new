@@ -26,6 +26,7 @@
             </div>
         </form>
     </div>
+    <a href="{{ url_for('admin_dashboard') }}" class="uk-button uk-button-primary">Dashboard</a>
 
     <hr class="uk-divider-small">
 
@@ -46,7 +47,7 @@
                 <td>{{ product.name }}</td>
                 <td>Rp{{ product.price | format_rupiah }}</td>
                 <td>
-                    <a href="#" class="uk-button uk-button-small uk-button-default">Edit</a>
+                    <a href="{{ url_for('admin_edit_product', product_id=product._id) }}" class="uk-button uk-button-small uk-button-default">Edit</a>
                     <form action="{{ url_for('admin_delete_product', product_id=product._id) }}" method="post" class="uk-display-inline">
                         <button type="submit" class="uk-button uk-button-small uk-button-danger">Hapus</button>
                     </form>
