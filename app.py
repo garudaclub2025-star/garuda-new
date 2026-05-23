@@ -178,11 +178,12 @@ def checkout():
         flash('Keranjang Anda kosong.', 'danger')
         return redirect(url_for('cart'))
 
-    # Ambil data diri dari form frontend
+    # Ambil data diri dan keterangan dari form frontend
     nama = request.form.get('buyer_name')
-    nis = request.form.get('buyer_nis', '-')  # Jika opsional/kosong, beri tanda strip
+    nis = request.form.get('buyer_nis', '-')
     unit = request.form.get('buyer_unit')
     sekolah = request.form.get('buyer_school')
+    keterangan = request.form.get('buyer_notes', '').strip() # Ambil data catatan tambahan
 
     # Buat template susunan pesan WhatsApp
     message = "⚠️ *PESANAN BARU - TAEKWONDO GARUDA CLUB* ⚠️\n\n"
@@ -200,7 +201,11 @@ def checkout():
         message += f"- {item['name']} ({item['quantity']}x) -> Rp{format_rupiah_py(subtotal)}\n"
         total_price += subtotal
         
-    message += f"\n*Total Pembayaran: Rp{format_rupiah_py(total_price)}*"
+    message += f"\n*Total Pembayaran: Rp{format_rupiah_py(total_price)}*\n"
+
+    # Jika pembeli mengisi keterangan, masukkan ke dalam teks WhatsApp
+    if keterangan:
+        message += f"\n*Catatan Tambahan:*\n_{keterangan}_\n"
 
     # Encode URL untuk WhatsApp
     whatsapp_number = app.config['WHATSAPP_NUMBER']
@@ -211,6 +216,7 @@ def checkout():
     session.pop('cart', None)
     flash('Pesanan Anda sedang diproses. Anda akan diarahkan ke WhatsApp untuk konfirmasi.', 'success')
     return redirect(whatsapp_url)
+    
 @app.route('/blog')
 def blog():
     posts = list(mongo.db.blog_posts.find().sort('date_posted', -1))
