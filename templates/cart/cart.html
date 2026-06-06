@@ -32,13 +32,19 @@
                                 <td class="uk-text-left uk-text-bold">{{ item.name }}</td>
                                 <td>Rp{{ item.price | format_rupiah }}</td>
                                 <td>
-                                    <!-- Form internal mandiri untuk update qty (Aman, tidak tabrakan) -->
-                                    <form action="{{ url_for('update_cart', product_id=item.id) }}" method="post" class="uk-flex uk-flex-center uk-flex-middle">
-                                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1" 
-                                               class="uk-input uk-form-width-mini uk-text-center uk-form-small" style="margin-right: 5px;">
-                                        <button type="submit" class="uk-button uk-button-small uk-button-default" uk-tooltip="title: Perbarui Jumlah">
-                                            <span uk-icon="refresh"></span>
-                                        </button>
+                                    <!-- Form internal mandiri untuk update qty (Diperbaiki agar tidak hilang di mobile) -->
+                                    <form action="{{ url_for('update_cart', product_id=item.id) }}" method="post" style="display: inline-block;">
+                                        <div class="uk-grid-collapse uk-flex-center uk-flex-middle" uk-grid>
+                                            <div style="width: 60px;">
+                                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" 
+                                                       class="uk-input uk-text-center uk-form-small" style="padding: 0; border-radius: 4px 0 0 4px;">
+                                            </div>
+                                            <div>
+                                                <button type="submit" class="uk-button uk-button-small uk-button-default" uk-tooltip="title: Perbarui Jumlah" style="padding: 0 10px; height: 30px; border-left: 0; border-radius: 0 4px 4px 0; flex-shrink: 0;">
+                                                    <span uk-icon="refresh"></span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </form>
                                 </td>
                                 <td class="uk-text-bold">Rp{{ (item.price * item.quantity) | format_rupiah }}</td>
@@ -97,7 +103,7 @@
                     <div class="uk-margin-small uk-margin-medium-bottom">
                         <label class="uk-form-label uk-text-bold" for="form-keterangan">Keterangan / Catatan Produk</label>
                         <div class="uk-form-controls">
-                            <textarea class="uk-textarea uk-border-rounded" id="form-keterangan" name="buyer_notes" rows="3" placeholder="Contoh: Ukuran baju M,Lengan Pendek atau Lengan Panjang."></textarea>
+                            <textarea class="uk-textarea uk-border-rounded" id="form-keterangan" name="buyer_notes" rows="3" placeholder="Contoh: Ukuran baju M, Lengan Pendek atau Lengan Panjang."></textarea>
                         </div>
                     </div>
 
