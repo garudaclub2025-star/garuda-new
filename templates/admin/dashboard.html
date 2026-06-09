@@ -5,7 +5,9 @@
 {% block content %}
     <h1 class="uk-text-center">Dashboard Admin</h1>
     <p>Selamat datang, {{ current_user.username }}!</p>
-    <div class="uk-child-width-1-2@m uk-grid-match" uk-grid>
+    
+    <!-- Mengubah uk-child-width-1-2@m menjadi 1-3@m agar muat 3 card sejajar di layar medium ke atas -->
+    <div class="uk-child-width-1-3@m uk-grid-match" uk-grid>
         <div>
             <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">
                 <h3 class="uk-card-title">Manajemen Produk</h3>
@@ -20,6 +22,14 @@
                 <p>Kelola postingan blog dan artikel.</p>
                 <p class="uk-text-large uk-text-bold">{{ total_blog_posts if total_blog_posts is not none else 'N/A' }} Postingan</p>
                 <a href="{{ url_for('admin_blog') }}" class="uk-button uk-button-primary">Kelola Blog</a>
+            </div>
+        </div>
+        <!-- Card Baru: Manajemen Penjualan -->
+        <div>
+            <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">
+                <h3 class="uk-card-title">Manajemen Penjualan</h3>
+                <p>Pantau data transaksi dan laporan produk terjual.</p>
+                <a href="https://stokbox.up.railway.app/" class="uk-button uk-button-primary">Kelola Penjualan</a>
             </div>
         </div>
     </div>
