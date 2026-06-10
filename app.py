@@ -186,13 +186,13 @@ def checkout():
     keterangan = request.form.get('buyer_notes', '').strip() # Ambil data catatan tambahan
 
 
-    # Buat template susunan pesan WhatsApp
+   # Buat template susunan pesan WhatsApp
     message = "⚠️ *PESANAN BARU - TAEKWONDO GARUDA CLUB* ⚠️\n\n"
     message += f"*Data Anggota:*\n"
     message += f"• Nama: {nama}\n"
-    message += f"• Nomor Telepon: {no_telp}\n"
+    message += f"• Nomor Telepon: {no_telp}\n" 
     message += f"• Unit: {unit}\n"
-    message += f"• Alamat: {alamat}\n\n"   
+    message += f"• Alamat: {alamat}\n\n"        
 
     
     message += "*Daftar Produk:*\n"
