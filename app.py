@@ -180,18 +180,20 @@ def checkout():
 
     # Ambil data diri dan keterangan dari form frontend
     nama = request.form.get('buyer_name')
-    nis = request.form.get('buyer_nis', '-')
+    nomor_telephone = request.form.get('buyer_phone', '-')
     unit = request.form.get('buyer_unit')
-    sekolah = request.form.get('buyer_school')
+    alamat = request.form.get('buyer_address')
     keterangan = request.form.get('buyer_notes', '').strip() # Ambil data catatan tambahan
+
 
     # Buat template susunan pesan WhatsApp
     message = "⚠️ *PESANAN BARU - TAEKWONDO GARUDA CLUB* ⚠️\n\n"
     message += f"*Data Anggota:*\n"
     message += f"• Nama: {nama}\n"
-    message += f"• NIS: {nis}\n"
+    message += f"• Nomor Telepon: {no_telp}\n"  # NIS diganti jadi Nomor Telepon
     message += f"• Unit: {unit}\n"
-    message += f"• Asal Sekolah: {sekolah}\n\n"
+    message += f"• Alamat: {alamat}\n\n"       # Asal Sekolah diganti jadi Alamat
+
     
     message += "*Daftar Produk:*\n"
     
