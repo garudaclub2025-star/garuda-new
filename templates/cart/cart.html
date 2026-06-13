@@ -89,7 +89,18 @@
                     <div class="uk-margin-small">
                         <label class="uk-form-label uk-text-bold" for="form-alamat">Alamat Lengkap</label>
                         <div class="uk-form-controls">
-                            <textarea class="uk-textarea uk-border-rounded" id="form-alamat" name="buyer_address" rows="2" placeholder="Masukkan alamat pengiriman / rumah" required></textarea>
+                            <textarea class="uk-textarea uk-border-rounded" id="form-alamat" name="buyer_address" rows="2" placeholder="Masukkan alamat rumah / tempat pengiriman" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label uk-text-bold" for="form-pengiriman">Layanan Pengiriman</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select uk-border-rounded" id="form-pengiriman" name="delivery_method" required>
+                                <option value="" disabled selected>-- Pilih Metode Pengiriman --</option>
+                                <option value="Di Rumah">Di Rumah (Kirim ke Alamat)</option>
+                                <option value="Di Tempat Latihan">Di Tempat Latihan (Dojang)</option>
+                            </select>
                         </div>
                     </div>
 
@@ -110,7 +121,8 @@
                             <span uk-icon="whatsapp" class="uk-margin-small-right"></span>Checkout via WhatsApp
                         </button>
                     </div>
-                </form> </div>
+                </form>
+            </div>
         </div>
 
     </div>
