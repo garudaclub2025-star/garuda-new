@@ -178,22 +178,23 @@ def checkout():
         flash('Keranjang Anda kosong.', 'danger')
         return redirect(url_for('cart'))
 
-    # Ambil data diri dan keterangan dari form frontend
+    # 1. Ambil data kiriman dari Form Frontend (HTML)
     nama = request.form.get('buyer_name')
-    nomor_telephone = request.form.get('buyer_phone', '-')  # Pastikan name="buyer_phone" di HTML
+    nomor_telephone = request.form.get('buyer_phone', '-') 
     unit = request.form.get('buyer_unit')
-    alamat = request.form.get('buyer_address')              # Pastikan name="buyer_address" di HTML
-    keterangan = request.form.get('buyer_notes', '').strip() # Ambil data catatan tambahan
+    alamat = request.form.get('buyer_address')        
+    layanan_kirim = request.form.get('delivery_method', 'Di Rumah') 
+    keterangan = request.form.get('buyer_notes', '').strip() 
 
-    # Buat template susunan pesan WhatsApp
+    # 2. Susun Struktur Template Pesan WhatsApp
     message = "⚠️ *PESANAN BARU - TAEKWONDO GARUDA CLUB* ⚠️\n\n"
     message += f"*Data Anggota:*\n"
     message += f"• Nama: {nama}\n"
-    message += f"• Nomor Telepon: {nomor_telephone}\n"  # Sudah diperbaiki dari no_telp ke nomor_telephone
+    message += f"• Nomor Telepon: {nomor_telephone}\n" 
     message += f"• Unit: {unit}\n"
-    message += f"• Alamat: {alamat}\n\n"      
+    message += f"• Alamat: {alamat}\n"
+    message += f"• Pengiriman: *{layanan_kirim}*\n\n" 
 
-    
     message += "*Daftar Produk:*\n"
     
     total_price = 0
@@ -204,18 +205,19 @@ def checkout():
         
     message += f"\n*Total Pembayaran: Rp{format_rupiah_py(total_price)}*\n"
 
-    # Jika pembeli mengisi keterangan, masukkan ke dalam teks WhatsApp
+    # Jika pembeli mengisi catatan/keterangan tambahan
     if keterangan:
         message += f"\n*Catatan Tambahan:*\n_{keterangan}_\n"
 
-    # Encode URL untuk WhatsApp
+    # 3. Proses Encode URL untuk Direct Link WhatsApp
     whatsapp_number = app.config['WHATSAPP_NUMBER']
     encoded_message = urllib.parse.quote(message)
     whatsapp_url = f"https://wa.me/{whatsapp_number}?text={encoded_message}"
 
-    # Kosongkan keranjang setelah checkout
+    # 4. Clear data session cart setelah checkout berhasil diproses
     session.pop('cart', None)
     flash('Pesanan Anda sedang diproses. Anda akan diarahkan ke WhatsApp untuk konfirmasi.', 'success')
+    
     return redirect(whatsapp_url)
     
 @app.route('/blog')
